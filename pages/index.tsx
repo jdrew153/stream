@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     <>
       <div>
           <ReactPlayer
-            url='//142.93.115.176:8000/live/test.flv'
+            url='https:://142.93.115.176:8000/live/test.flv'
             controls
 
           />
