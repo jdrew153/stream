@@ -49,7 +49,7 @@ const Home: NextPage = () => {
       <div className='w-full h-full grid grid-rows-2  lg:grid-cols-3  gap-0'>
         <div className='flex justify-center  col-span-2 mt-1'>
         <ReactPlayer
-          url='http://katykatjd.com/live/test.flv'
+          url='https://katykatjd.com/live/test.flv'
           controls
           width={playerWidth}
           height={playerWidth / (16/9)}
