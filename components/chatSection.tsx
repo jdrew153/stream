@@ -6,7 +6,7 @@ const ChatSection: React.FC = () => {
         <div className='h-full flex flex-grow-0 flex-col  bg-nav-bar-black w-full mt-1 '>
             <div className='flex items-center justify-center w-full h-16 text-white border-solid border-b-slate-400 border-b-1 '>
                 <h3>
-                    Chat
+                  Stream  Chat
                 </h3>
 
             </div>
