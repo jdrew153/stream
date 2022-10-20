@@ -1,4 +1,6 @@
 import { Button, TextInput } from "@mantine/core";
+import MessageComponent from "./messageComponent";
+import {ScrollArea} from '@mantine/core';
 
 const ChatSection: React.FC = () => {
     return (
@@ -10,7 +12,13 @@ const ChatSection: React.FC = () => {
                 </h3>
 
             </div>
-            <div className='h-full w-full flex flex-row  items-end'>
+           
+            <div className='h-full w-full flex flex-col  items-end'>
+           <ScrollArea style={{ height: '100%', width: '100%'}}>
+                <div className='p-4'>
+                <MessageComponent/>
+                </div>
+            </ScrollArea>
                 <div className='w-full flex  justify-center p-2'>
                     <form className='w-full'>
                        <div className='w-full h-full flex flex-row space-y-2'>
