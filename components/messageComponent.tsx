@@ -1,22 +1,28 @@
 
-import {Avatar} from '@mantine/core';
+import {Avatar, Text} from '@mantine/core';
+
 
 const MessageComponent = () => {
     return (
         <>
-        <div className='w-full relative flex flex-row space-x-3'>
-            <div className='w-10 h-10 flex flex-row space-x-2 items-center'>
-                <Avatar radius='lg'/>
+        <div className='w-auto h-auto relative flex flex-row space-x-2'>
+            <div className='w-6 h-6 flex flex-row space-x-1 items-center'>
+                <Avatar radius='xl'/>
                 <div className='h-8 flex items-center justify-center'>
-                    <h3>
+                    <header className='text-sm font-semibold'>
                         Test
-                    </h3>
+                    </header>
                 </div>
             </div>
-            <div className='flex relative w-full mt-3 justify-center ml-8 '>
-                <header>
-                    First Comment
-                </header>
+            <div className='flex w-auto absolute justify-center '>
+                <div className=' w-24'>
+
+                </div>
+               <div className='max-w-[440px] h-auto'>
+                    <Text size='sm' lineClamp={4}>
+                        why is line clamp not working....
+                    </Text>
+               </div>
             </div>
         </div>
         </>

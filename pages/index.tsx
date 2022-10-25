@@ -34,8 +34,14 @@ const Home: NextPage = () => {
   const calculateVideoSize = () => {
     const windowSize = window.innerWidth;
     const videoWidth = windowSize - 750;
-    setPlayerWidth(videoWidth)
-    console.log(playerWidth)
+
+    if (videoWidth < 0) {
+        setPlayerWidth(175)
+    } else {
+      setPlayerWidth(videoWidth)
+      console.log(playerWidth)
+    }
+    
   };
 
   useEffect(() => {
@@ -52,14 +58,14 @@ const Home: NextPage = () => {
           url='https://katykatjd.com/live/test.flv'
           controls
           width={playerWidth}
-          height={playerWidth / (16/9)}
+          height={playerWidth * (9/16)}
           style={{
             'minWidth': '250px'
           }}
           
         />
         </div>
-       <div className='relative flex justify-end w-screen lg:w-full h-[calc(100%-4rem)] lg:h-[calc(100vh-4rem)]'>
+       <div className='relative flex justify-end w-screen lg:w-full mt-2 lg:mt-0 h-[calc(100%-4rem)] lg:h-[calc(100vh-4rem)]'>
           <ChatSection/>
        </div>
       </div>
