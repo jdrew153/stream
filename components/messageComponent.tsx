@@ -2,15 +2,22 @@
 import {Avatar, Text} from '@mantine/core';
 
 
-const MessageComponent = () => {
+
+interface props {
+    sender: String,
+    content: String,
+    time_stamp: String
+};
+
+const MessageComponent:React.FC<props> = (props:props) => {
     return (
         <>
-        <div className='w-auto h-auto relative flex flex-row space-x-2'>
+        <div className='w-auto h-auto min-h-4 relative flex flex-row space-x-2'>
             <div className='w-6 h-6 flex flex-row space-x-1 items-center'>
                 <Avatar radius='xl'/>
                 <div className='h-8 flex items-center justify-center'>
                     <header className='text-sm font-semibold'>
-                        Test
+                        {props.sender}
                     </header>
                 </div>
             </div>
@@ -20,7 +27,7 @@ const MessageComponent = () => {
                 </div>
                <div className='max-w-[440px] h-auto'>
                     <Text size='sm' lineClamp={4}>
-                        why is line clamp not working....
+                        {props.content}
                     </Text>
                </div>
             </div>
