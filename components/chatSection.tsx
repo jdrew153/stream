@@ -5,7 +5,7 @@ import {useForm} from '@mantine/form';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from 'axios'
 import dayjs from 'dayjs';
-import { useEffect, useRef, useState } from "react";
+import { Key, useEffect, useRef, useState } from "react";
 import {v4 as uuidv4} from 'uuid';
 
 
@@ -87,7 +87,7 @@ const ChatSection: React.FC = () => {
                     <>
                     { getStreamChat.data && getStreamChat.data.map((m:Message) => 
                         <div className='p-4'>
-                        <MessageComponent sender={m.sender} content={m.content} time_stamp={m.timeStamp}/>
+                        <MessageComponent sender={m.sender} content={m.content} time_stamp={m.timeStamp} key={m.message_id as Key}/>
                         </div>
                     )}
                     </>
