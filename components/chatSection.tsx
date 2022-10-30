@@ -86,7 +86,7 @@ const ChatSection: React.FC = () => {
                 ) : (
                     <>
                     { getStreamChat.data && getStreamChat.data.map((m:Message) => 
-                        <div className='p-4'>
+                        <div key={m.message_id as Key} className='p-4'>
                         <MessageComponent sender={m.sender} content={m.content} time_stamp={m.timeStamp} key={m.message_id as Key}/>
                         </div>
                     )}
