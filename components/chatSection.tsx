@@ -6,8 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from 'axios'
 import dayjs from 'dayjs';
 import { Key, useEffect, useRef, useState, useMemo } from "react";
-import {v4 as uuidv4} from 'uuid';
-import {io,Socket} from 'socket.io-client'
+import {getCookie} from 'cookies-next'
 
 
 
@@ -31,9 +30,7 @@ const ChatSection: React.FC = () => {
     
     const queryClient = useQueryClient();
 
-    const [messages, setMessages] = useState();
-    const [socketId, setSocketId] = useState<String>('')
-
+    const validatedUser = getCookie('user')
 
     const getStreamChat = useQuery(['stream-chat'], async () => {
         const response = await axios.get("http://localhost:5000/api/get-stream-messages")
@@ -120,10 +117,11 @@ const ChatSection: React.FC = () => {
                         
                         
                     }}>
-                       <div className='w-full h-full flex flex-row space-y-2'>
+                       <div className={`w-full h-full flex flex-row space-y-2 ${(validatedUser == null) ? ( 'opacity-50') : ('opacity-100')}`}>
                        <TextInput 
                         placeholder='Send a Message'
                         variant='filled'
+                        disabled={(validatedUser == null)}
                         style={{
                             'width': '100%',
                             'padding': '8px',
@@ -134,7 +132,7 @@ const ChatSection: React.FC = () => {
 
                         <Button
                             type='submit'
-                            
+                            disabled={(validatedUser == null)}
                             className='hover:bg-purple-500 hover:cursor-pointer bg-purple-500'
                             
                         >
