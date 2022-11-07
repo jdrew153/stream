@@ -5,34 +5,43 @@ import {useForm} from '@mantine/form';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from 'axios'
 import dayjs from 'dayjs';
-import { Key, useEffect, useRef, useState } from "react";
+import { Key, useEffect, useRef, useState, useMemo } from "react";
 import {v4 as uuidv4} from 'uuid';
+import {io,Socket} from 'socket.io-client'
+
+
+
+
 
 
 
 interface Message {
-    message_id: String,
+    id?: String,
     sender: String,
     content: String,
     timeStamp: String
 }
 
 
+
+
+
 const ChatSection: React.FC = () => {
 
-
-
+    
     const queryClient = useQueryClient();
 
-    const [messages, setMessages] = useState<[Message]>();
+    const [messages, setMessages] = useState();
+    const [socketId, setSocketId] = useState<String>('')
+
 
     const getStreamChat = useQuery(['stream-chat'], async () => {
-        const response = await axios.get("http://localhost:8080/api/get-all-messages")
+        const response = await axios.get("http://localhost:5000/api/get-stream-messages")
         return response.data
     })
 
     const postMessage = useMutation(['send-new-message'], async (message:Message) => {
-        const response = await axios.post("http://localhost:8080/api/write-new-message", message)
+        const response = await axios.post("http://localhost:5000/api/write-new-message", message)
         return response.data
     }, {
     
@@ -43,13 +52,16 @@ const ChatSection: React.FC = () => {
         onError: () => {
             console.log("There was an error while trying to send the message")
         }
-    })
+    });
 
-   
+//     (function retrieveStreamChat() {
+//         setInterval(() => {
+//             queryClient.invalidateQueries(['stream-chat'])
+//         }, 1000)
+//    })();
 
     const messageForm = useForm<Message>({
         initialValues: {
-            message_id: uuidv4().toString(),
             sender: 'jdrew',
             content: '',
             timeStamp: dayjs().toString(),
@@ -59,12 +71,10 @@ const ChatSection: React.FC = () => {
 
     async function handleMessageSubmit(values:Message) {
         const newMessage = postMessage.mutateAsync(values)
-
+        
         return newMessage
     }
-    
-
-    
+        
   
     return (
         <>
@@ -86,8 +96,12 @@ const ChatSection: React.FC = () => {
                 ) : (
                     <>
                     { getStreamChat.data && getStreamChat.data.map((m:Message) => 
-                        <div key={m.message_id as Key} className='p-4'>
-                        <MessageComponent sender={m.sender} content={m.content} time_stamp={m.timeStamp} key={m.message_id as Key}/>
+                        <div key={m.id as Key} className='p-4'>
+                            <h3 id="test">
+
+                            </h3>
+
+                        <MessageComponent sender={m.sender} content={m.content} time_stamp={m.timeStamp} key={m.id as Key}/>
                         </div>
                     )}
                     </>
@@ -98,7 +112,7 @@ const ChatSection: React.FC = () => {
                         e.preventDefault()
                          handleMessageSubmit({
                             content: messageForm.values.content,
-                            message_id: messageForm.values.message_id,
+                            id: messageForm.values.id,
                             sender: messageForm.values.sender,
                             timeStamp: messageForm.values.timeStamp
                         })
