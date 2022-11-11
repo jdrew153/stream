@@ -1,5 +1,6 @@
 import { Button, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+<<<<<<< HEAD
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import {useState} from 'react'
@@ -114,7 +115,64 @@ const NavBar: React.FC = () => {
                     </div>
 
                 </Modal>
+=======
+import axios from "axios";
+
+import { useState } from "react";
+import { UserData } from "../hooks/useClient";
+
+
+const NavBar: React.FC = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState('')
+    const streamForm = useForm<UserData>()
+    const handleSubmit = async (values:UserData) => {
+        try {
+            const response = await axios.post("http://localhost:8000/create-stream-user", values)
+            console.log(response)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    return (
+        <>
+        <div className='w-screen h-16 flex justify-end items-center bg-nav-bar-black shadow-2xl'>
+            <div className='h-8 mr-4'>
+                <Button className='bg-purple-500 hover:bg-purple-500 hover:cursor-pointer p-2'
+                    onClick={() => {
+                        if (!showModal) {
+                            setShowModal(true)
+                        }
+                    }}
+                >
+                    Enter Stream
+                </Button>
+            </div>
+>>>>>>> 24983d8 (reworked messaging)
         </div>
+        <Modal 
+            opened={showModal}
+            onClose={() => setShowModal(false)}
+        >
+            <form className='flex flex-col space-y-2' onSubmit={ async (e) => {
+                e.preventDefault()
+                await handleSubmit({
+                    id: '1234',
+                    name: name
+                })
+            }}>
+                <TextInput
+                    type='text'
+                    placeholder='Enter your name'
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <Button type='submit'  className='bg-purple-500 hover:bg-purple-500 hover:cursor-pointer p-2'>
+                    Submit
+                </Button>
+            </form>
+
+        </Modal>
         </>
     )
 };

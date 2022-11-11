@@ -5,11 +5,17 @@ import {useForm} from '@mantine/form';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from 'axios'
 import dayjs from 'dayjs';
+<<<<<<< HEAD
 import { Key, useEffect, useRef, useState, useMemo } from "react";
 import {getCookie} from 'cookies-next'
 
 
 
+=======
+import { Key, useEffect, useRef, useState } from "react";
+import {v4 as uuidv4} from 'uuid';
+import {io} from 'socket.io-client';
+>>>>>>> 24983d8 (reworked messaging)
 
 
 
@@ -21,16 +27,24 @@ interface Message {
     timeStamp: String
 }
 
+const socket =  io("http://localhost:4000");
 
 
 
 
 const ChatSection: React.FC = () => {
+<<<<<<< HEAD
 
     
     const queryClient = useQueryClient();
 
     const validatedUser = getCookie('user')
+=======
+    const queryClient = useQueryClient();
+
+    const [messages, setMessages] = useState<[Message]>();
+    const [wsMessages, setWsMessage] = useState<[string]>(['']);
+>>>>>>> 24983d8 (reworked messaging)
 
     const getStreamChat = useQuery(['stream-chat'], async () => {
         const response = await axios.get("http://localhost:5000/api/get-stream-messages")
@@ -68,10 +82,17 @@ const ChatSection: React.FC = () => {
 
     async function handleMessageSubmit(values:Message) {
         const newMessage = postMessage.mutateAsync(values)
+<<<<<<< HEAD
         
         return newMessage
     }
         
+=======
+       
+        return newMessage
+    }
+    
+>>>>>>> 24983d8 (reworked messaging)
   
     return (
         <>
@@ -107,6 +128,7 @@ const ChatSection: React.FC = () => {
                 <div className='w-full flex  justify-center p-2'>
                     <form className='w-full'  onSubmit={async (e) => {
                         e.preventDefault()
+<<<<<<< HEAD
                          handleMessageSubmit({
                             content: messageForm.values.content,
                             id: messageForm.values.id,
@@ -114,6 +136,19 @@ const ChatSection: React.FC = () => {
                             timeStamp: messageForm.values.timeStamp
                         })
                         .then(() => messageForm.reset())
+=======
+                        if (messageForm.values.content != undefined) {
+                            socket.emit('send-message', messageForm.values.content);
+                        }
+
+                        //  handleMessageSubmit({
+                        //     content: messageForm.values.content,
+                        //     message_id: messageForm.values.message_id,
+                        //     sender: messageForm.values.sender,
+                        //     timeStamp: messageForm.values.timeStamp
+                        // })
+                        // .then(() => messageForm.reset())
+>>>>>>> 24983d8 (reworked messaging)
                         
                         
                     }}>

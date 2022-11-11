@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState } from 'react';
 import NavBar from '../components/navBar';
 import ChatSection from '../components/chatSection';
+import StreamChatList from '../components/streamChatList';
 
 
 
@@ -51,7 +52,7 @@ const Home: NextPage = () => {
   return (
     <>
     <NavBar/>
-     <div className='w-screen h-screen relative bg-black scrollbar-hide'>
+     <div className='w-screen h-screen fixed bg-black scrollbar-hide'>
       <div className='w-full h-full grid grid-rows-2  lg:grid-cols-3  gap-0'>
         <div className='flex justify-center  col-span-2 mt-1'>
         <ReactPlayer
@@ -65,8 +66,8 @@ const Home: NextPage = () => {
           
         />
         </div>
-       <div className='relative flex justify-end w-screen lg:w-full mt-2 lg:mt-0 h-[calc(100%-4rem)] lg:h-[calc(100vh-4rem)]'>
-          <ChatSection/>
+       <div className='relative flex justify-end  z-50 lg:w-full mt-2 lg:mt-0 h-[calc(100%-4rem)] lg:h-[calc(100vh-4rem)]'>
+          <StreamChatList/>
        </div>
       </div>
      </div>
